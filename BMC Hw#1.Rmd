@@ -1,0 +1,295 @@
+---
+title: 'Brandi Christiano Homework #1'
+output:
+  pdf_document: default
+  html_notebook: default
+date: "March 10, 2021"
+---
+
+#---------------------------Challenge 1---------------------------------------
+
+Write R code to load the text of the last chapter of Charles Darwin’s “On the Origin of Species” (CHAPTER XV. RECAPITULATION AND CONCLUSION) from the data file “darwin.txt,” housed at “https://raw.githubusercontent.com/difiore/ada-2021-datasets/main/darwin.txt,” into a character vector, where each element is a paragraph from the chapter.
+
+```{r}
+f<- file.choose()
+DF<-read.delim(f)
+DF
+```
+
+
+Calculate and print out how many paragraphs are there in the chapter (do not count the chapter title as a paragraph)
+```{r}
+nrow(DF)
+```
+
+Print out the element that is the 34th paragraph from the chapter
+```{r}
+DF[34,]
+para34 <- DF[34,]
+```
+
+Split the chapter into a new vector, split, comprising a vector of 1-word character strings (i.e., each element in this new vector should be a different word).
+```{r}
+?str_split
+split1 <- str_split(DF[34,], " ", n = Inf, simplify = FALSE)
+split1
+str(split1)
+```
+
+```{r}
+split2 <- split1[1][[1]]
+class(split2)
+split2
+```
+
+How many unique words are there in this vector? What is the most common word? How many words appear exactly 1 time? How many words appear 5 or more times?
+
+```{r}
+table1 <- table(split2)
+sort(table1, decreasing=FALSE)
+```
+There are 129 unique words in the vector.. 
+```{r}
+length(table1)
+```
+
+
+```{r}
+table1 <- table(split2)
+sorted.table1 <- sort(table1, decreasing=TRUE)
+```
+
+"of" is the most common word, occurring 14 times. 
+```{r}
+sorted.table1[1]
+```
+
+```{r}
+df1 <- data.frame(sorted.table1)
+df1
+```
+There are 98 words that occur 1 time 
+
+```{r}
+count(df1$Freq == "1")
+```
+
+There are 5 words that appear 5 or more times
+```{r}
+filter(df1, Freq>=5)
+```
+
+Extract the entire text of the last paragraph to a new variable, final_quote, which should read:
+
+
+```{r}
+final_quote <- DF[56,]
+final_quote
+```
+Split this variable into a new vector, split_quote, again comprising a vector of 1-word character strings (i.e., each element in the vector is a different word)
+```{r}
+split3 <- str_split(DF[56,], " ", n = Inf, simplify = FALSE)
+split3
+split4 <- split3[1][[1]]
+```
+Extract every third element from this vector, assign them to a new vector, every_third, and print out the new vector. Be sure to begin with the 3rd word in the quote, i.e., “interesting.”
+```{r}
+
+every_third <-split4[seq(from = 0, to = length(split4), by = 3)]
+every_third
+```
+
+Rearrange the elements of the vector every_third into reverse alphabetical order and print it out again.
+```{r}
+?sort
+sort(every_third, decreasing=TRUE)
+```
+
+
+
+
+
+#--------------------------CHALLENGE 2--------------------------------------
+
+
+
+```{r}
+TC <- data.frame( "Temperatures" = c("35", "88", "42", "84", "81", "30"), "Location" = c("Beijing", "Lagos", "Paris", "Rio de Janeiro", "San Juan", "Toronto"))
+TC
+```
+
+
+Use the function c() to create a vector with the average high temperatures in January for Beijing, Lagos, Paris, Rio de Janeiro, San Juan, and Toronto, which are 35, 88, 42, 84, 81, and 30 degrees Fahrenheit. Call the object t.
+
+
+```{r}
+t <-  ("Temperatures" = c("35", "88", "42", "84", "81", "30"))
+t
+```
+
+Now create a vector with the city names and call the object city.
+```{r}
+city <- ("city"=c("Beijing", "Lagos", "Paris", "Rio de Janeiro", "San Juan", "Toronto"))
+city
+```
+Use the names() function and the objects defined above to associate the temperature data with its corresponding city.
+```{r}
+?names
+names(t) <- city
+names(t)
+```
+Use the [ and : operators to access the temperature of the first three cities on the list.
+```{r}
+city[1:3]
+```
+Use the [ operator to access the temperatures of Paris and San Juan.
+```{r}
+t[c(3,5)]
+```
+
+
+# ----------------------Challenge 3------------------------------------------
+
+Create a 8 row by 20 column matrix, named m1, consisting of integers arranged in descending order from 159 to 0. Fill your matrix column-wise.
+```{r}
+m1 <- matrix(
+  data = seq(from=160,to=1),
+  nrow = 8,
+  ncol = 20,
+  byrow=FALSE
+)
+```
+
+Using single bracket notation, extract and print the element in row 5, column 2.
+```{r}
+m1[5,2]
+```
+Using single bracket notation, extract and print the contents of rows 5 to 7 of the matrix.
+```{r}
+m1[5:7,]
+```
+Using single bracket notation, extract the contents of (row 3, column 4) to (row 6, column 9) as a new variable, m2. 
+```{r}
+m2 <- m1[3:6,4:9]
+m2
+```
+What is the class of this variable? What is the mode of this variable?
+```{r}
+class(m2)
+mode(m2)
+```
+
+
+
+# ---------------------- Challenge 3B------------------------------------
+
+Construct a 4-dimensional, 400-element array (5 x 5 x 4 x 4), named a, consisting of even integers from 2 to 800 (i.e., a descending series)
+```{r}
+a <- array(data = 2:800, dim = c(5, 5,4,4))
+a
+```
+
+```{r}
+a[1, 1, 1, 2] # 102
+```
+
+```{r}
+a[2, 3, 2, ]# 38,138,238,338
+```
+
+```{r}
+a[1:5, 1:5, 3, 3]
+```
+
+
+# ----------------------------------Challenge 4 -------------------------------
+
+
+
+Create a list representing the (simplified) primate taxonomy outlined below and shown in the figure. Name each internal node in the list (i.e., Superfamily and above) with the appropriate taxonomic level and name. Within each superfamily, you can use a vector to store family names (e.g., Superfamily Lorisoidea can be represented as c("Lorisidae, "Galagidae")).
+
+
+```{r}
+?nest
+```
+
+```{r}
+Superfamily.Lorisoidea <- c("Lorisoidea", "Galagidae")
+Superfamily.Lemuroidea <- c("Cheirogaleidae", "Lepilemuridea", "Indriidae", "Lemuridae", "Daubentoniidae")
+Superfamily.Tarsioidea <- c("Tarsiidae")
+Superfamily.Ceboidea <- c("Cebidae", "Atelidae", "Pitheciidae")
+Superfamily.Hominoidea <- c("Hylobatidae", "Hominidae")
+Superfamily.Cercopithecoidea <- c("Cercopithecidae")
+```               
+
+
+```{r}
+Parvorder.Platyrrhini <- list(Superfamily.Ceboidea)
+names(Parvorder.Platyrrhini) <-c("Superfamily.Ceboidea")
+
+Parvorder.Catarrhini <- list(Superfamily.Hominoidea, Superfamily.Cercopithecoidea)
+names(Parvorder.Catarrhini) <- c("Superfamily.Hominoidea" , "Superfamily.Cercopithecoidea")
+```
+
+```{r}
+Infraorder.Lorisiformes <- list(Superfamily.Lorisoidea)
+names(Infraorder.Lorisiformes) <- c("Superfamily.Lorisoidea")
+
+Infraorder.Lemuriformes <- list(Superfamily.Lemuroidea)
+names(Infraorder.Lemuriformes) <- c("Superfamily.Lemuroidea")
+
+Infraorder.Tarsiiformes <- list(Superfamily.Tarsioidea)
+names(Infraorder.Tarsiiformes) <- c("Superfamily.Tarsioidea")
+
+Infraorder.Simiiformes <- list(Parvorder.Platyrrhini, Parvorder.Catarrhini)
+names(Infraorder.Simiiformes) <- c("Parvorder.Platyrrhini" , "Parvorder.Catarrhini")
+
+```
+
+```{r}
+Suborder.Strepsirrhini <- list(Infraorder.Lorisiformes, Infraorder.Lemuriformes)
+names(Suborder.Strepsirrhini) <- c("Infraorder.Lorisiformes", "Infraorder.Lemuriformes")
+
+Suborder.Haplorrhini <- list(Infraorder.Tarsiiformes, Infraorder.Simiiformes)
+names(Suborder.Haplorrhini) <- c("Infraorder.Tarsiiformes", "Infraorder.Simiiformes")
+```
+
+```{r}
+Order.Primate <- list(Suborder.Strepsirrhini,Suborder.Haplorrhini )
+names(Order.primate) <- c("Suborder.Strepsirrhini" ,"Suborder.Haplorrhini")
+Order.Primate
+```
+
+Use double bracket notation to extract only the primates of the Americas (Parvorder Platyrrhini) from this list into a new variable platyrrhines. What is the class of this variable? What is the mode of this variable?
+```{r}
+(platyrrhines <- Haplorrhini[[2]][1])
+```
+
+Use $ notation to extract the tarisers (i.e., Family Tarsiidae)
+```{r}
+x <- Suborder.Haplorrhini$Infraorder.Tarsiiformes
+x
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
