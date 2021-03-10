@@ -225,40 +225,54 @@ Superfamily.Cercopithecoidea <- c("Cercopithecidae")
 
 ```{r}
 Parvorder.Platyrrhini <- list(Superfamily.Ceboidea)
-names(Parvorder.Platyrrhini) <-c("Superfamily.Ceboidea")
 
 Parvorder.Catarrhini <- list(Superfamily.Hominoidea, Superfamily.Cercopithecoidea)
-names(Parvorder.Catarrhini) <- c("Superfamily.Hominoidea" , "Superfamily.Cercopithecoidea")
+
 ```
 
 ```{r}
 Infraorder.Lorisiformes <- list(Superfamily.Lorisoidea)
-names(Infraorder.Lorisiformes) <- c("Superfamily.Lorisoidea")
+
 
 Infraorder.Lemuriformes <- list(Superfamily.Lemuroidea)
-names(Infraorder.Lemuriformes) <- c("Superfamily.Lemuroidea")
+
 
 Infraorder.Tarsiiformes <- list(Superfamily.Tarsioidea)
-names(Infraorder.Tarsiiformes) <- c("Superfamily.Tarsioidea")
+
 
 Infraorder.Simiiformes <- list(Parvorder.Platyrrhini, Parvorder.Catarrhini)
-names(Infraorder.Simiiformes) <- c("Parvorder.Platyrrhini" , "Parvorder.Catarrhini")
+
 
 ```
 
 ```{r}
 Suborder.Strepsirrhini <- list(Infraorder.Lorisiformes, Infraorder.Lemuriformes)
-names(Suborder.Strepsirrhini) <- c("Infraorder.Lorisiformes", "Infraorder.Lemuriformes")
+
 
 Suborder.Haplorrhini <- list(Infraorder.Tarsiiformes, Infraorder.Simiiformes)
-names(Suborder.Haplorrhini) <- c("Infraorder.Tarsiiformes", "Infraorder.Simiiformes")
+
 ```
 
 ```{r}
 Order.Primate <- list(Suborder.Strepsirrhini,Suborder.Haplorrhini )
+```
+
+```{r}
+names(Parvorder.Platyrrhini) <-c("Superfamily.Ceboidea")
+names(Parvorder.Catarrhini) <- c("Superfamily.Hominoidea" , "Superfamily.Cercopithecoidea")
+names(Infraorder.Lorisiformes) <- c("Superfamily.Lorisoidea")
+names(Infraorder.Lemuriformes) <- c("Superfamily.Lemuroidea")
+names(Infraorder.Tarsiiformes) <- c("Superfamily.Tarsioidea")
+names(Infraorder.Simiiformes) <- c("Parvorder.Platyrrhini" , "Parvorder.Catarrhini")
+names(Suborder.Strepsirrhini) <- c("Infraorder.Lorisiformes", "Infraorder.Lemuriformes")
+names(Suborder.Haplorrhini) <- c("Infraorder.Tarsiiformes", "Infraorder.Simiiformes")
 names(Order.primate) <- c("Suborder.Strepsirrhini" ,"Suborder.Haplorrhini")
+
+
+
 Order.Primate
 ```
+
 
 Use double bracket notation to extract only the primates of the Americas (Parvorder Platyrrhini) from this list into a new variable platyrrhines. What is the class of this variable? What is the mode of this variable?
 ```{r}
